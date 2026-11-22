@@ -1,4 +1,4 @@
-# README: jinja
+# Jinja
 
 Zed extension for Jinja syntax highlighting, indentation, bracket matching and outline. Specifically for use with project scaffolding templates, such as [Copier](https://github.com/copier-org/copier).
 
