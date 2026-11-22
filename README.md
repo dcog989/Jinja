@@ -9,9 +9,7 @@ The extension follows <https://jinja.palletsprojects.com/en/stable/> and associa
 
 ## Installation
 
-This extension is not published to the gallery yet. Install it as a dev extension: run `zed: install dev extension` and point at this directory.
-
-The grammar is pinned to a local `file://` path in `extension.toml`, so the install only works at this directory. Before publishing, replace `repository` with the public URL and bump `rev`.
+Not in the gallery yet. Install it as a dev extension: run `zed: install dev extension` and point at this directory.
 
 ## Known limitations
 
@@ -20,7 +18,7 @@ The grammar is pinned to a local `file://` path in `extension.toml`, so the inst
 
 ## Development
 
-`just test` runs the grammar corpus and checks that `test.jinja` parses without errors. Development needs `tree-sitter-cli` 0.26.11.
+`just test` runs the grammar corpus and checks that `test.jinja` parses without errors. Development needs `tree-sitter-cli` 0.26.9.
 
 The grammar source is a patched copy of <https://github.com/bennypowers/tree-sitter-jinja-dialects>, in `grammar/`. The patch adds test arguments, slices, bare and empty tuples, filter chains, and `+` whitespace control.
 
