@@ -49,3 +49,23 @@ test: _ts-cli
 # Regenerate the grammar parser.
 build: _ts-cli
     cd grammar && tree-sitter generate
+
+# Install the conventional-commit hook in this clone.
+hooks:
+    cog install-hook commit-msg
+
+# Bump the version from conventional commits and tag it.
+release:
+    cog bump --auto
+
+# Bump to an explicit version (`just release-version 1.2.3`).
+release-version version:
+    cog bump --version {{version}}
+
+# Verify commit messages in a range (`just commits origin/main..HEAD`).
+commits range="origin/main..HEAD":
+    cog check {{range}}
+
+# Verify a commit message file, as the commit-msg hook passes it.
+commit-check file *args:
+    cog verify --file {{file}} {{args}}

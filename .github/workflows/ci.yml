@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # Must match the tree-sitter version pinned in the justfile.
+      - name: Install tree-sitter-cli
+        run: npm install -g tree-sitter-cli@0.26.9
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cocogitto
+
+      - name: Conventional commits (pull request)
+        if: github.event_name == 'pull_request'
+        run: just commits "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+
+      - name: Conventional commits (push)
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: just commits "${{ github.event.before }}..${{ github.event.after }}"
+
+      # The justfile owns the command set; running it here keeps CI and `just check`
+      # from drifting.
+      - name: Check
+        run: just check
