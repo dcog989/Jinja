@@ -8,4 +8,4 @@ description = "Jinja template syntax highlighting and indentation."
 [grammars.jinja]
 repository = "file:///home/bubba/Projects/jinja"
 path = "grammar"
-rev = "f18ccbf0ac84d25dca7edb2b45a1fc6474137e93"
+rev = "df3e5367b12b53872f4cbf48e7d8a71eb3b588da"
