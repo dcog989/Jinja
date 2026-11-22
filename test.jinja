@@ -1,0 +1,182 @@
+{# Test fixture: every Jinja construct the extension claims to support. #}
+{#- Trimmed comment -#}
+
+## Output expressions
+
+{{ project_name }}
+{{ user.name }}
+{{ user["name"] }}
+{{ items[0] }}
+{{ items[-1] }}
+{{ items[1:] }}
+{{ items[1:3] }}
+{{ items[::2] }}
+{{ "a" if condition else "b" }}
+{{ "x" ~ 1 ~ "y" }}
+{{ 1 + 2 - 3 * 4 / 5 // 6 % 7 ** 8 }}
+{{ (1 + 2) * 3 }}
+{{ a == b and c != d or not e }}
+{{ a < b <= c > d >= e }}
+{{ a in b }}
+{{ a not in b }}
+{{ a is defined }}
+{{ a is not none }}
+{{ a is string }}
+{{ a is sequence }}
+{{ a is even }}
+{{ 9 is divisibleby 3 }}
+{{ 1 is in [1, 2, 3] }}
+{{ a is sameas false }}
+{{ name | lower }}
+{{ name | default("anon", true) | title }}
+{{ items | map(attribute="name") | join(", ") }}
+{{ value | round(2, "ceil") }}
+{{ func(1, 2, key="value") }}
+{{ range(3) | list }}
+
+## Literals
+
+{{ "double quotes" }}
+{{ 'single quotes' }}
+{{ "escape: \"quote\" \n tab:\t" }}
+{{ 42 }}
+{{ 3.14 }}
+{{ true }} {{ false }}
+{{ True }} {{ False }}
+{{ none }} {{ None }}
+{{ [] }}
+{{ [1, 2, 3] }}
+{{ [1, "two", 3.0, true, none] }}
+{{ (1, 2) }}
+{{ () }}
+{{ {} }}
+{{ {"key": "value", bare: 1, 2: "two"} }}
+{{ {"nested": {"list": [1, 2]}} }}
+
+## Whitespace control
+
+{{- trimmed -}}
+{{- left_trim }}
+{{ right_trim -}}
+{%- if true -%}
+trimmed
+{%- endif -%}
+{%- if true %}left trim statement{% endif %}
+{%+ if true +%}
+plus keeps whitespace
+{%+ endif +%}
+{%+ if true %}plus statement{% endif %}
+{#- trimmed comment -#}
+{#- left trim comment #}
+
+## Conditionals
+
+{% if language == "Rust" %}
+Rust
+{% elif language == "Python" %}
+Python
+{% else %}
+Other
+{% endif %}
+
+{% if a %}{% if b %}nested{% endif %}{% endif %}
+
+## Loops
+
+{% for item in items %}
+{{ loop.index }}: {{ item }}
+{% endfor %}
+
+{% for key, value in mapping.items() %}
+{{ key }} = {{ value }}
+{% else %}
+no items
+{% endfor %}
+
+{% for item in items if item.visible %}
+{{ item.name }}
+{% endfor %}
+
+{% for item in tree recursive %}
+{{ item.name }}
+{{ loop(item.children) }}
+{% endfor %}
+
+## Blocks and inheritance
+
+{% extends "base.jinja" %}
+{% block body scoped %}
+{{ super() }}
+content
+{% endblock body %}
+
+## Including and importing
+
+{% include "partial.md" %}
+{% include "partial.md" ignore missing %}
+{% include "partial.md" with context %}
+{% include "partial.md" without context %}
+{% include ["a.md", "b.md"] ignore missing %}
+{% import "macros.jinja" as helpers %}
+{% from "macros.jinja" import render, icon as draw %}
+{% from "macros.jinja" import render with context %}
+
+## Macros and calls
+
+{% macro render(item, cls="default") %}
+<span class="{{ cls }}">{{ item }}</span>
+{% endmacro %}
+
+{% macro wrap() %}
+{{ caller("inner") }}
+{% endmacro %}
+
+{% call(value) wrap() %}
+{{ value }}
+{% endcall %}
+
+{% macro variadic() %}
+{{ varargs }} {{ kwargs }}
+{% endmacro %}
+
+## Assignment
+
+{% set name = "value" %}
+{% set a, b = 1, 2 %}
+{% set block_value %}
+inside set block
+{% endset %}
+
+## Filters and tests as blocks
+
+{% filter upper %}shout{% endfilter %}
+{% filter trim | lower %}{% endfilter %}
+{% filter trim %}
+  Padded
+{% endfilter %}
+
+## Scoping
+
+{% with a = 1, b = 2 %}
+{{ a + b }}
+{% endwith %}
+
+{% autoescape true %}
+{{ raw_html }}
+{% endautoescape %}
+
+## Raw output
+
+{% raw %}
+{{ not_jinja }} {% not_a_tag %}
+{% endraw %}
+
+## Side effects
+
+{% do items.append(1) %}
+
+## i18n extension
+
+{% trans %}Hello{% endtrans %}
+{% trans count=n %}One item{% pluralize %}{{ count }} items{% endtrans %}
+{% trans user=user.name %}Hello {{ user }}{% endtrans %}

@@ -1,0 +1,6 @@
+name = "Jinja"
+grammar = "jinja"
+path_suffixes = ["jinja", "jinja2", "j2"]
+block_comment = { start = "{#", prefix = "", end = "#}", tab_size = 0 }
+increase_indent_pattern = '^\s*\{%[-+~]?\s*(?:(if|elif|else|for|block|macro|call|filter|with|autoescape|trans|raw)\b[^%]*(?:%[^}][^%]*)*|set\s+[A-Za-z_]\w*\s*)[-+~]?%\}\s*$'
+decrease_indent_pattern = '^\s*\{%[-+~]?\s*(end\w+|elif|else)\b.*[-+~]?%\}\s*$'

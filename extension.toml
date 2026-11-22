@@ -1,0 +1,11 @@
+id = "jinja"
+name = "Jinja"
+version = "0.1.0"
+schema_version = 1
+authors = ["dcog989"]
+description = "Jinja template syntax highlighting and indentation."
+
+[grammars.jinja]
+repository = "file:///home/bubba/Projects/jinja"
+path = "grammar"
+rev = "f18ccbf0ac84d25dca7edb2b45a1fc6474137e93"
