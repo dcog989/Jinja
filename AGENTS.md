@@ -13,15 +13,18 @@
 - `languages/jinja/highlights.scm` — highlighting query
 - `languages/jinja/brackets.scm` — bracket pairs
 - `languages/jinja/outline.scm` — outline symbols
-- `grammar/grammar.js` — grammar source
+- `grammar/grammar.js` — grammar source, a patched fork of `bennypowers/tree-sitter-jinja-dialects`; keep the upstream MIT notice in `grammar/LICENSE`
 - `grammar/src/` — generated parser, node types and grammar JSON
 - `grammar/src/scanner.c` — hand-written external scanner, not generated
 - `grammar/test/corpus/` — grammar tests
+- `grammar/test/queries/brackets.jinja` — bracket fixture, must yield 10 captures
 - `test.jinja` — fixture for every supported construct
 
 ### Workflow
 
-- Test: `just test` (requires `tree-sitter-cli`)
+- Test: `just test` (tree-sitter-cli 0.27.2; the justfile rejects any other version)
+- Full gate: `just check` — rev pin, query lint, generated sources current, tests
+- Lint queries: `just lint` (only check on the `.scm` files)
 - Rebuild grammar: `just build`, then commit the regenerated `grammar/src/`
 - Install locally: run `zed: install dev extension` and point at this directory
 - After any grammar change, bump `rev` in `extension.toml` to the commit containing it
@@ -54,37 +57,38 @@
 
 ### Code Changes
 
-- For non-trivial work, propose an approach and confirm before implementing.
-- Keep modifications minimal and scoped; prefer incremental improvements over rewrites. Ask before architectural changes.
+- For non-trivial work, propose an approach and confirm before implementing, including architectural changes.
+- Keep modifications minimal and scoped; prefer incremental improvements over rewrites.
 - Use explicit types and named constants (no magic numbers).
 - Return explicit error types; do not suppress exceptions.
 - Follow standard repository linting and formatting configs.
 - Decompose files over 400 lines if they mix concerns.
-- Use clear naming over comments; reserve comments for complex workarounds or non-obvious issues — why, not what.
+- Name things clearly; reserve comments for the non-obvious why (workarounds, edge cases).
 - Never run git mutations (commit, push, reset, rebase, amend) unless explicitly instructed.
 - Do not create documentation files unless explicitly requested.
+- Adhere to <https://develop.kde.org/hig/>.
 - Use APCA rather than WCAG for color contrast.
 
 ### Author Environment
 
-- CachyOS, KDE Plasma 6, Wayland, Btrfs.
-- fish shell, Ghostty terminal, Fresh TUI editor, yay package manager, bun npm manager, Firefox, and Zed code editor.
+- Ryzen 5800X3D, Radeon RX 7900 XT, Display (AW3225QF); CachyOS, KDE, KWin / Wayland, Btrfs.
+- fish shell, Ghostty terminal, Fresh TUI editor, yay package manager, bun npm manager, Firefox, Zed code editor.
 
 ### Testing
 
-- Do not create test files for trivial changes, or for behavior that is not reliably unit-testable in the test environment (e.g. UI layout/click mapping). Prefer no new files; only add a test when the logic is genuinely testable and worth guarding.
+- Add tests only when the logic is genuinely testable and worth guarding. No test files for trivial changes or behavior the environment cannot test reliably (e.g. UI layout/click mapping).
 
 ### Definition of Done
 
 - Logic fully implemented.
 - Existing docs updated if public interfaces changed.
-- When required by the `Verification` rules, run the corresponding `Workflow` command.
+- Run the corresponding `Workflow` command when `Verification` requires it.
 
 ### Commit Messages
 
 - On completion of an update or fix, print a conventional commit message in a fenced code block.
 - Add a body only when the "why" isn't obvious.
-- Do not wrap lines. One physical line per paragraph however long it gets. Never hard-wrap the subject or the body.
+- Never hard-wrap: one physical line per paragraph, however long.
 
 ### Communication Style
 

@@ -19,7 +19,7 @@ check: rev-check lint format-check test
 
 # Require the tree-sitter version used to generate the parser.
 _ts-cli:
-    @test "$(tree-sitter --version)" = "tree-sitter 0.26.9" || { echo "tree-sitter 0.26.9 required"; exit 1; }
+    @test "$(tree-sitter --version)" = "tree-sitter 0.27.2" || { echo "tree-sitter 0.27.2 required"; exit 1; }
 
 # Fail if extension.toml pins a grammar revision older than HEAD.
 rev-check:

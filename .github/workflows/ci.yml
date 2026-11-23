@@ -28,7 +28,7 @@ jobs:
 
       # Must match the tree-sitter version pinned in the justfile.
       - name: Install tree-sitter-cli
-        run: npm install -g tree-sitter-cli@0.26.9
+        run: npm install -g tree-sitter-cli@0.27.2
 
       - uses: taiki-e/install-action@v2
         with:
