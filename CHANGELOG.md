@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.1 - 2026-11-23
+#### Build system
+- regenerate parser with tree-sitter 0.27.2 - (980d770) - dcog989
+#### Miscellaneous Chores
+- remove unused svg - (c838da1) - dcog989
+- bump grammar rev - (4492656) - dcog989
+
+- - -
+
 ## v0.1.0 - 2026-11-22
 #### Features
 - add cocogitto release workflow - (57242ab) - dcog989
